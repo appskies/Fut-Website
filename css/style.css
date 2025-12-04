@@ -582,46 +582,91 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* ===================================
-   Testimonials Section
+   Testimonials Section - Stadium Scoreboard Slider
    =================================== */
 .testimonials {
     padding: var(--section-padding);
     background: var(--gradient-field);
+    overflow: hidden;
 }
 
-.testimonials-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 30px;
+/* Stadium Slider Container */
+.stadium-slider {
+    max-width: 1100px;
+    margin: 0 auto;
 }
 
+/* Progress Bar */
+.stadium-progress {
+    height: 4px;
+    background: rgba(46, 204, 113, 0.2);
+    border-radius: 2px;
+    margin-bottom: 40px;
+    overflow: hidden;
+}
+
+.stadium-progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent-gold), var(--accent-green));
+    border-radius: 2px;
+    width: 20%;
+    transition: width 0.3s ease, transform 0.3s ease;
+}
+
+/* Track Wrapper */
+.stadium-track-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+/* Stadium Track - 3 Cards Visible */
+.stadium-track {
+    display: flex;
+    gap: 20px;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    min-height: 320px;
+}
+
+/* Testimonial Cards */
 .testimonial-card {
     background: var(--card-bg);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(46, 204, 113, 0.15);
     border-radius: 20px;
-    padding: 35px;
-    transition: var(--transition-normal);
+    padding: 30px 25px;
+    text-align: center;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    flex: 0 0 280px;
+    opacity: 0.5;
+    transform: scale(0.85);
+    display: none;
 }
 
-.testimonial-card:hover {
+.testimonial-card.visible {
+    display: block;
+}
+
+.testimonial-card.side {
+    opacity: 0.6;
+    transform: scale(0.85);
+}
+
+.testimonial-card.active {
+    opacity: 1;
+    transform: scale(1.05);
     border-color: var(--accent-gold);
-    background: var(--card-bg-hover);
-}
-
-/* Make middle card in second row span two columns or center it */
-.testimonial-card:nth-child(4) {
-    grid-column: 1 / 2;
-}
-
-.testimonial-card:nth-child(5) {
-    grid-column: 2 / 3;
+    box-shadow: 0 0 40px rgba(212, 175, 55, 0.3), 0 20px 60px rgba(0, 0, 0, 0.3);
+    flex: 0 0 320px;
+    z-index: 10;
 }
 
 .testimonial-stars {
     margin-bottom: 20px;
-    font-size: 1.2rem;
-    letter-spacing: 3px;
+    font-size: 1.3rem;
+    letter-spacing: 4px;
 }
 
 .testimonial-text {
@@ -632,9 +677,14 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 0.95rem;
 }
 
+.testimonial-card.active .testimonial-text {
+    font-size: 1rem;
+}
+
 .testimonial-author {
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 5px;
 }
 
@@ -642,11 +692,132 @@ h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-heading);
     color: var(--accent-gold);
     font-weight: 600;
+    font-size: 1rem;
+}
+
+.testimonial-card.active .author-name {
+    font-size: 1.1rem;
 }
 
 .author-location {
     font-size: 0.85rem;
     color: var(--text-muted);
+}
+
+/* Stadium Arrows */
+.stadium-arrow {
+    width: 60px;
+    height: 60px;
+    border: 2px solid rgba(46, 204, 113, 0.3);
+    border-radius: 50%;
+    background: rgba(10, 31, 10, 0.8);
+    color: var(--text-light);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+    font-size: 1.5rem;
+}
+
+.stadium-arrow:hover {
+    border-color: var(--accent-gold);
+    background: rgba(212, 175, 55, 0.2);
+    transform: scale(1.1);
+    box-shadow: 0 0 25px rgba(212, 175, 55, 0.4);
+}
+
+.stadium-arrow span {
+    transition: transform 0.3s ease;
+}
+
+.stadium-prev:hover span {
+    transform: translateX(-3px);
+}
+
+.stadium-next:hover span {
+    transform: translateX(3px);
+}
+
+/* Responsive Stadium Slider */
+@media (max-width: 1024px) {
+    .stadium-track {
+        gap: 15px;
+    }
+
+    .testimonial-card {
+        flex: 0 0 250px;
+    }
+
+    .testimonial-card.active {
+        flex: 0 0 280px;
+    }
+}
+
+@media (max-width: 768px) {
+    .stadium-track-wrapper {
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .stadium-track {
+        flex-direction: column;
+        min-height: auto;
+        gap: 20px;
+    }
+
+    .testimonial-card {
+        flex: none;
+        width: 100%;
+        max-width: 350px;
+        display: none;
+    }
+
+    .testimonial-card.active {
+        display: block;
+        flex: none;
+        width: 100%;
+        max-width: 350px;
+        transform: scale(1);
+    }
+
+    .testimonial-card.side {
+        display: none;
+    }
+
+    .stadium-arrow {
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+    }
+
+    .stadium-track-wrapper {
+        flex-direction: row;
+    }
+
+    .stadium-track {
+        flex-direction: row;
+    }
+}
+
+@media (max-width: 480px) {
+    .stadium-slider {
+        padding: 0 10px;
+    }
+
+    .stadium-arrow {
+        width: 45px;
+        height: 45px;
+    }
+
+    .testimonial-card {
+        padding: 25px 20px;
+    }
+
+    .testimonial-text {
+        font-size: 0.9rem;
+    }
 }
 
 /* ===================================

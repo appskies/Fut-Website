@@ -93,6 +93,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initSmoothScroll();
     initParallaxEffect();
     initCardHoverEffect();
+    initStadiumSlider();
 });
 
 /**
@@ -352,4 +353,173 @@ function throttle(func, limit) {
             setTimeout(() => inThrottle = false, limit);
         }
     };
+}
+
+/**
+ * Stadium Scoreboard Slider - 3 Card View
+ * Shows 3 cards with center card highlighted like a stadium display
+ */
+function initStadiumSlider() {
+    console.log('Initializing stadium slider...');
+
+    const slider = document.querySelector('.stadium-slider');
+    if (!slider) {
+        console.log('Stadium slider not found, skipping initialization');
+        return;
+    }
+
+    const track = slider.querySelector('.stadium-track');
+    const cards = slider.querySelectorAll('.testimonial-card');
+    const prevBtn = slider.querySelector('.stadium-prev');
+    const nextBtn = slider.querySelector('.stadium-next');
+    const progressBar = slider.querySelector('.stadium-progress-bar');
+
+    if (!track || cards.length === 0) {
+        console.log('Stadium slider elements not found');
+        return;
+    }
+
+    let currentIndex = 0;
+    let autoPlayInterval;
+    const autoPlayDelay = 4000; // 4 seconds
+    let startX = 0;
+    let isDragging = false;
+
+    // Initialize slider
+    updateSlider();
+    startAutoPlay();
+
+    // Auto-play functionality
+    function startAutoPlay() {
+        stopAutoPlay();
+        autoPlayInterval = setInterval(() => {
+            goToSlide(currentIndex + 1);
+        }, autoPlayDelay);
+    }
+
+    function stopAutoPlay() {
+        if (autoPlayInterval) {
+            clearInterval(autoPlayInterval);
+        }
+    }
+
+    // Go to specific slide
+    function goToSlide(index) {
+        // Loop around
+        if (index >= cards.length) {
+            currentIndex = 0;
+        } else if (index < 0) {
+            currentIndex = cards.length - 1;
+        } else {
+            currentIndex = index;
+        }
+        updateSlider();
+    }
+
+    // Update slider position and active states
+    function updateSlider() {
+        // Calculate positions for 3-card view
+        const totalCards = cards.length;
+
+        cards.forEach((card, index) => {
+            // Remove all state classes
+            card.classList.remove('active', 'visible', 'side');
+
+            // Calculate the position relative to current (with wrapping)
+            let diff = index - currentIndex;
+
+            // Handle wrapping for prev card
+            if (currentIndex === 0 && index === totalCards - 1) {
+                diff = -1;
+            }
+            // Handle wrapping for next card
+            if (currentIndex === totalCards - 1 && index === 0) {
+                diff = 1;
+            }
+
+            if (diff === 0) {
+                // Center card (active)
+                card.classList.add('visible', 'active');
+            } else if (diff === -1 || diff === 1) {
+                // Side cards (prev and next)
+                card.classList.add('visible', 'side');
+            }
+            // Other cards stay hidden (no visible class)
+        });
+
+        // Update progress bar
+        if (progressBar) {
+            const progress = ((currentIndex + 1) / cards.length) * 100;
+            progressBar.style.width = `${progress}%`;
+        }
+    }
+
+    // Event Listeners for buttons
+    if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+            goToSlide(currentIndex - 1);
+            stopAutoPlay();
+            startAutoPlay();
+        });
+    }
+
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+            goToSlide(currentIndex + 1);
+            stopAutoPlay();
+            startAutoPlay();
+        });
+    }
+
+    // Touch/Swipe support
+    slider.addEventListener('touchstart', (e) => {
+        startX = e.touches[0].clientX;
+        isDragging = true;
+        stopAutoPlay();
+    }, { passive: true });
+
+    slider.addEventListener('touchmove', (e) => {
+        if (!isDragging) return;
+    }, { passive: true });
+
+    slider.addEventListener('touchend', (e) => {
+        if (!isDragging) return;
+        const endX = e.changedTouches[0].clientX;
+        const diff = startX - endX;
+
+        if (Math.abs(diff) > 50) {
+            if (diff > 0) {
+                goToSlide(currentIndex + 1);
+            } else {
+                goToSlide(currentIndex - 1);
+            }
+        }
+
+        isDragging = false;
+        startAutoPlay();
+    });
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+        const sliderRect = slider.getBoundingClientRect();
+        const isInView = sliderRect.top < window.innerHeight && sliderRect.bottom > 0;
+
+        if (isInView) {
+            if (e.key === 'ArrowLeft') {
+                goToSlide(currentIndex - 1);
+                stopAutoPlay();
+                startAutoPlay();
+            } else if (e.key === 'ArrowRight') {
+                goToSlide(currentIndex + 1);
+                stopAutoPlay();
+                startAutoPlay();
+            }
+        }
+    });
+
+    // Pause on hover
+    slider.addEventListener('mouseenter', stopAutoPlay);
+    slider.addEventListener('mouseleave', startAutoPlay);
+
+    console.log('Stadium slider initialized with', cards.length, 'cards');
 }
