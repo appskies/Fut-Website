@@ -1,0 +1,14 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": [ "Q4432Z5FDX.com.asimcanyagiz.Fut-Card-Creator" ],
+        "components": [
+          { "/": "/card/*",  "comment": "Open a shared FUT card (Collection tab)" },
+          { "/": "/team/*",  "comment": "Open a shared team (Team screen)" },
+          { "/": "/paywall", "comment": "Open the offer paywall (supports ?placement=)" }
+        ]
+      }
+    ]
+  }
+}
