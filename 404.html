@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open in the app — FC FUT Card Creator</title>
+    <meta name="robots" content="noindex">
+    <link rel="icon" type="image/png" href="https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/08/e5/b2/08e5b283-5dfa-2dfa-a500-bc617918db93/AppIcon-0-0-1x_U007epad-0-1-0-0-85-220.jpeg/180x180bb.jpg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: radial-gradient(circle at 50% 0%, #10331f 0%, #07160d 55%, #050b07 100%);
+            color: #f4f7f5;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 24px;
+        }
+        .card {
+            max-width: 460px;
+            width: 100%;
+        }
+        .icon {
+            width: 96px;
+            height: 96px;
+            border-radius: 22px;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.55);
+            margin-bottom: 28px;
+        }
+        h1 {
+            font-family: 'Oswald', sans-serif;
+            font-weight: 700;
+            font-size: 30px;
+            letter-spacing: 0.5px;
+            line-height: 1.15;
+            margin-bottom: 14px;
+        }
+        h1 .accent { color: #35d07f; }
+        p {
+            font-size: 16px;
+            line-height: 1.5;
+            color: #b9c6bd;
+            margin-bottom: 30px;
+        }
+        .btn {
+            display: inline-block;
+            background: #35d07f;
+            color: #062012;
+            font-family: 'Oswald', sans-serif;
+            font-weight: 600;
+            font-size: 17px;
+            letter-spacing: 0.6px;
+            text-transform: uppercase;
+            text-decoration: none;
+            padding: 15px 34px;
+            border-radius: 12px;
+            transition: transform 0.15s ease, background 0.15s ease;
+        }
+        .btn:hover { background: #45e08d; transform: translateY(-2px); }
+        .hint {
+            margin-top: 22px;
+            font-size: 13px;
+            color: #6f8078;
+            min-height: 18px;
+        }
+        .home {
+            margin-top: 26px;
+            font-size: 14px;
+        }
+        .home a { color: #8aa596; text-decoration: none; }
+        .home a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <main class="card">
+        <img class="icon" src="https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/08/e5/b2/08e5b283-5dfa-2dfa-a500-bc617918db93/AppIcon-0-0-1x_U007epad-0-1-0-0-85-220.jpeg/180x180bb.jpg" alt="FC FUT Card Creator app icon">
+        <h1 id="title">This lives in the <span class="accent">app</span></h1>
+        <p id="subtitle">Get <strong>FC FUT Card Creator</strong> to open shared cards, teams and lineups.</p>
+        <a class="btn" id="appstore" href="https://apps.apple.com/app/id6450124871">Get the App</a>
+        <div class="hint" id="hint"></div>
+        <div class="home"><a href="/">← Back to futcardcreator.app</a></div>
+    </main>
+    <script>
+        // If the missing path looks like an app deep link (/card/*, /team/*, /paywall),
+        // the visitor almost certainly tapped a shared link without the app installed.
+        // Tailor the copy and gently auto-forward to the App Store. All other 404s just
+        // show the branded page with a manual "Get the App" button (no forced redirect).
+        (function () {
+            var APP_STORE = "https://apps.apple.com/app/id6450124871";
+            var path = window.location.pathname || "";
+            var isDeepLink = /^\/(card|team|paywall)(\/|$)/i.test(path);
+            if (isDeepLink) {
+                if (path.toLowerCase().indexOf("/team") === 0) {
+                    document.getElementById("title").innerHTML = 'This team lives in the <span class="accent">app</span>';
+                    document.getElementById("subtitle").innerHTML = 'Get <strong>FC FUT Card Creator</strong> to view this shared team.';
+                } else if (path.toLowerCase().indexOf("/card") === 0) {
+                    document.getElementById("title").innerHTML = 'This card lives in the <span class="accent">app</span>';
+                    document.getElementById("subtitle").innerHTML = 'Get <strong>FC FUT Card Creator</strong> to view this shared card.';
+                }
+                var hint = document.getElementById("hint");
+                var seconds = 3;
+                hint.textContent = "Opening the App Store in " + seconds + "…";
+                var timer = setInterval(function () {
+                    seconds -= 1;
+                    if (seconds <= 0) {
+                        clearInterval(timer);
+                        hint.textContent = "Opening the App Store…";
+                        window.location.replace(APP_STORE);
+                    } else {
+                        hint.textContent = "Opening the App Store in " + seconds + "…";
+                    }
+                }, 1000);
+            }
+        })();
+    </script>
+</body>
+</html>
