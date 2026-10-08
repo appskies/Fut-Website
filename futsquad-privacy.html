@@ -73,6 +73,17 @@
             margin-bottom: 8px;
         }
 
+        /* Inline links inside the policy text (the default blue is unreadable on the dark card) */
+        .legal-section a {
+            color: var(--accent-gold);
+            text-decoration: underline;
+            transition: var(--transition-fast);
+        }
+
+        .legal-section a:hover {
+            color: var(--accent-green);
+        }
+
         .back-link {
             display: inline-flex;
             align-items: center;
