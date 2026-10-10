@@ -106,7 +106,7 @@
                 <a href="/" class="back-link">&larr; Back to Home</a>
 
                 <h1 class="legal-title">Privacy Policy</h1>
-                <p class="legal-updated">Last updated: June 2026</p>
+                <p class="legal-updated">Last updated: October 10, 2026</p>
 
                 <div class="legal-section">
                     <h2>1. Introduction</h2>
@@ -138,7 +138,6 @@
                     <ul>
                         <li>We do NOT collect precise geolocation data.</li>
                         <li>We do NOT access your contacts, calendar, or other personal files.</li>
-                        <li>We do NOT track you across other apps or websites (we do not participate in cross-app tracking).</li>
                         <li>We do NOT collect payment card information (all payments are processed by Apple).</li>
                     </ul>
                 </div>
@@ -174,7 +173,7 @@
                     <p>We retain your personal data only for as long as necessary to fulfill the purposes for which it was collected:</p>
                     <ul>
                         <li><strong>Account Data:</strong> Retained while your account is active and for up to 3 years after account deletion for legal and business purposes.</li>
-                        <li><strong>User-Uploaded Photos:</strong> Photos uploaded for card creation are processed locally on your device and are not stored on our servers unless you choose to save cards to cloud storage.</li>
+                        <li><strong>Card Images:</strong> Editing and rendering take place on your device. Saving a card through the app, including Save to Library, can also upload the rendered card image and its card data to Firebase under your account; this does not require a separate cloud-storage selection.</li>
                         <li><strong>Usage Data:</strong> Retained for up to 2 years for analytics purposes in anonymized form.</li>
                         <li><strong>Transaction Records:</strong> Retained for up to 7 years to comply with financial and tax regulations.</li>
                     </ul>
@@ -211,10 +210,10 @@
                     <p>Our App may integrate with or use the following third-party services:</p>
                     <ul>
                         <li><strong>Apple App Store:</strong> For app distribution, in-app purchases, and subscription management. Apple's privacy policy applies to payment processing.</li>
-                        <li><strong>Firebase (Google):</strong> For crash reporting, analytics, and performance monitoring.</li>
-                        <li><strong>Google AdMob:</strong> For displaying advertising, including ad measurement and limit ad tracking. AdMob may collect identifiers (such as IDFA when tracking permission is granted via the App Tracking Transparency prompt, or IDFV) and basic device data to deliver and measure ads.</li>
-                        <li><strong>Google User Messaging Platform (UMP):</strong> For collecting GDPR consent and presenting the consent form before any tracking or personalized advertising occurs.</li>
-                        <li><strong>RevenueCat:</strong> For subscription management and analytics.</li>
+                        <li><strong>Firebase (Google):</strong> For account authentication, storing account and card/team data and uploaded images, push notifications, usage analytics, and crash reporting.</li>
+                        <li><strong>Unity LevelPlay (ironSource) and Unity Ads:</strong> For displaying and measuring advertising. Advertising services may process device and app identifiers, IP addresses, device information, and ad interactions. Apple's advertising identifier (IDFA) is available only when you grant tracking permission.</li>
+                        <li><strong>AppsFlyer:</strong> For measuring app installations, campaign attribution, app events, and purchase or subscription events. This can involve app and device identifiers, IP addresses, and information about app activity; IDFA access depends on your tracking permission.</li>
+                        <li><strong>RevenueCat:</strong> For subscription and entitlement management, including an app user identifier, purchase history, subscription status, and purchase analytics. Apple processes payment-card information.</li>
                         <li><strong>Cloud Infrastructure:</strong> For secure data storage and processing.</li>
                     </ul>
                     <p>These third parties have their own privacy policies governing their collection and use of information. We encourage you to review their policies.</p>
@@ -258,12 +257,12 @@
 
                 <div class="legal-section">
                     <h2>10. Apple App Tracking Transparency</h2>
-                    <p>In compliance with Apple's App Tracking Transparency (ATT) framework:</p>
+                    <p>Apple's App Tracking Transparency (ATT) setting controls permission to track your activity across other companies' apps and websites for advertising and advertising measurement:</p>
                     <ul>
-                        <li>We do NOT track you across apps and websites owned by other companies.</li>
-                        <li>We do NOT use your data for targeted advertising purposes.</li>
-                        <li>We do NOT share your data with data brokers.</li>
-                        <li>If we ever implement tracking features in the future, we will request your permission through Apple's ATT prompt before any tracking occurs.</li>
+                        <li>If you allow tracking, attribution services may use IDFA and app activity for advertising measurement. The app keeps its advertising SDK in restricted-processing mode; allowing ATT does not by itself enable personalized ads or replace separate regional consent requirements.</li>
+                        <li>If you decline tracking, IDFA is unavailable. Essential account services, purchase processing, and non-tracking diagnostics are separate from this permission.</li>
+                        <li>You can review or change your choice in iOS Settings &gt; Privacy &amp; Security &gt; Tracking.</li>
+                        <li>ATT permission is separate from any consent required under local privacy laws.</li>
                     </ul>
                 </div>
 
